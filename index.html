@@ -106,6 +106,32 @@
             responseDiv.textContent = ''; // Clear previous response
 
             try {
+                const aiIntegrationManifest = {
+                    "name": "AI Integration Manifest",
+                    "description": "Provides guidelines and API details for integrating AI capabilities (websim.chat, websim.imageGen, websim.textToSpeech) into an application. This manifest is relevant if the solution requires dynamic content generation, image creation, natural language understanding, or advanced personalization.",
+                    "features": [
+                        {
+                            "featureName": "Chat Completions",
+                            "apiCall": "websim.chat.completions.create",
+                            "description": "Enables conversational AI, text summarization, data extraction, and dynamic content generation.",
+                            "parameters_example": "{ messages: [{ role: 'user', content: '...' }], temperature: 0.7 }"
+                        },
+                        {
+                            "featureName": "Image Generation",
+                            "apiCall": "websim.imageGen",
+                            "description": "Enables generating visual assets from textual descriptions.",
+                            "parameters_example": "{ prompt: '...', aspect_ratio: '1:1', transparent: false }"
+                        },
+                        {
+                            "featureName": "Text-to-Speech",
+                            "apiCall": "websim.textToSpeech",
+                            "description": "Enables converting text into spoken audio for accessibility or interactive interfaces.",
+                            "parameters_example": "{ text: '...', voice: 'en-male' }"
+                        }
+                    ],
+                    "usageGuidance": "When developing an application, if the project needs to generate dynamic content, images, or audio, or process natural language, integrating these websim AI features as described in this manifest is highly recommended. The choice of features should align with the application's core functionality, user experience goals, and ethical considerations."
+                };
+
                 const completion = await websim.chat.completions.create({
                     messages: [
                         {
@@ -114,7 +140,18 @@
 Your task is to collaboratively solve the user's given problem/project.
 Think collaboratively, weighing pros and cons from each expert's view.
 Provide a structured plan or solution that balances technical feasibility, creative innovation, and ethical/user-centered design.
-Use clear section headers for each part of the solution (e.g., "1. Project Overview", "2. Technical Feasibility (Software Engineer's View)", "3. User Experience & Innovation (UX Designer's View)", "4. Ethical & Societal Considerations (AI Ethicist's View)", "5. Collaborative Solution & Next Steps").
+
+**Available Feature Manifests:**
+We have access to various 'feature manifest files' which contain detailed information on how to use special capabilities (like AI generation, advanced data processing, etc.) when building an application. You, as the multidisciplinary team, must decide which of these manifest files are relevant and beneficial for the proposed solution.
+
+Here is a crucial manifest file for AI integration:
+\`\`\`json
+${JSON.stringify(aiIntegrationManifest, null, 2)}
+\`\`\`
+
+Based on the user's problem, explicitly state which manifest files are selected for the solution and provide a rationale for each selection within a dedicated section titled "6. Selected Feature Manifests & Rationale". If no manifest is relevant, state that explicitly.
+
+Use clear section headers for each part of the solution (e.g., "1. Project Overview", "2. Technical Feasibility (Software Engineer's View)", "3. User Experience & Innovation (UX Designer's View)", "4. Ethical & Societal Considerations (AI Ethicist's View)", "5. Collaborative Solution & Next Steps", "6. Selected Feature Manifests & Rationale").
 Ensure your response is comprehensive and insightful from all three perspectives.`
                         },
                         {
@@ -139,4 +176,3 @@ Ensure your response is comprehensive and insightful from all three perspectives
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
-
