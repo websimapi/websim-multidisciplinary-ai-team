@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multidisciplinary AI Team</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #response {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            white-space: pre-wrap; /* Preserves formatting including line breaks */
+            word-wrap: break-word; /* Breaks long words */
+            min-height: 100px;
+            border: 1px solid #dde1e2;
+            line-height: 1.6;
+        }
+        #loading {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #555;
+            display: none; /* Hidden by default */
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Multidisciplinary AI Team</h1>
+        <p>Describe your problem or project, and our AI team will provide a collaborative solution.</p>
+        <textarea id="problemInput" placeholder="E.g., 'Designing an AI-powered personalized learning platform for K-12 students'"></textarea>
+        <button id="generateButton">Generate Solution</button>
+        <div id="loading">Thinking collaboratively...</div>
+        <div id="response"></div>
+    </div>
+
+    <script type="module">
+        const problemInput = document.getElementById('problemInput');
+        const generateButton = document.getElementById('generateButton');
+        const responseDiv = document.getElementById('response');
+        const loadingDiv = document.getElementById('loading');
+
+        generateButton.addEventListener('click', async () => {
+            const userProblem = problemInput.value.trim();
+            if (!userProblem) {
+                responseDiv.textContent = 'Please describe a problem or project to get a solution.';
+                return;
+            }
+
+            loadingDiv.style.display = 'block';
+            responseDiv.textContent = ''; // Clear previous response
+
+            try {
+                const completion = await websim.chat.completions.create({
+                    messages: [
+                        {
+                            role: "system",
+                            content: `You are a multidisciplinary team composed of a Senior Software Engineer, a Lead UX Designer, and an AI Ethicist.
+Your task is to collaboratively solve the user's given problem/project.
+Think collaboratively, weighing pros and cons from each expert's view.
+Provide a structured plan or solution that balances technical feasibility, creative innovation, and ethical/user-centered design.
+Use clear section headers for each part of the solution (e.g., "1. Project Overview", "2. Technical Feasibility (Software Engineer's View)", "3. User Experience & Innovation (UX Designer's View)", "4. Ethical & Societal Considerations (AI Ethicist's View)", "5. Collaborative Solution & Next Steps").
+Ensure your response is comprehensive and insightful from all three perspectives.`
+                        },
+                        {
+                            role: "user",
+                            content: userProblem,
+                        },
+                    ],
+                    // Increase temperature for more creative responses, but keep it balanced for a structured plan
+                    temperature: 0.7,
+                });
+
+                responseDiv.textContent = completion.content;
+
+            } catch (error) {
+                console.error("Error generating solution:", error);
+                responseDiv.textContent = 'An error occurred while generating the solution. Please try again.';
+            } finally {
+                loadingDiv.style.display = 'none';
+            }
+        });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+
